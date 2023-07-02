@@ -5,34 +5,46 @@ from cutomerclass import *
 from booking_win2 import run2
 
 
+data = None
 
 with open(r"Front end\data\data.txt", "r") as file:
     nested_data = file.readlines()
+
 
 def nextpage():
     win.destroy()
     run1()
 
+
 def check_data(username, pno, password):
-    global nested_data
+    global nested_data, data
     for detail in nested_data:
-        if(detail != "\n"):
+        if detail != "\n":
             attribute = eval(detail)
-            if(attribute[0] == username.upper() and attribute[1] == pno and attribute[3] == password):
+            if (
+                attribute[0] == username.upper()
+                and attribute[1] == pno
+                and attribute[3] == password
+            ):
+                data = attribute
                 return True
     return False
 
+
 def gologin():
+    global data
     username = name.get()
     pno = phno.get()
     password = pwd.get()
-    if(check_data(username, pno, password)):
+    if check_data(username, pno, password):
         win.destroy()
-        run2()
+        customer = Customer(data[0], data[1], data[2], data[3], data[4])
+        run2(customer)
     else:
         messagebox.showerror("Invalid credentials", "Please Enter proper details!")
 
-if(__name__ == "__main__"):
+
+if __name__ == "__main__":
     win = Tk()
     win.title("TABLE RESERVATION SYSTEM")
     win.geometry("400x500")
@@ -53,11 +65,11 @@ if(__name__ == "__main__"):
     pwdentry = Entry(win, textvariable=pwd).grid(row=4, column=1, padx=5, pady=10)
 
     Login = partial(gologin)
-    loginbutton = Button(win, text="Login", command = Login).grid(row=5, column=1)
+    loginbutton = Button(win, text="Login", command=Login).grid(row=5, column=1)
 
     Label(win, text="Signup if you are a new user").grid(row=6, column=0, pady=20)
 
     take_signup = partial(nextpage)
     signup = Button(win, text="Signup", command=take_signup).grid(row=7, column=0)
-    
+
     win.mainloop()

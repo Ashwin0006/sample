@@ -36,7 +36,7 @@ def run1():
                 file.write(str(identity))
 
             win1.destroy()
-            run2()
+            run2(customer)
 
     def add_data(customer):
         data.append(customer)
