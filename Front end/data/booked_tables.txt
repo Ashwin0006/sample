@@ -1,1 +1,1 @@
-Name :ASHWIN, Seats:4, time:PY_VAR9, date :PY_VAR8Name :SENTHILS2K`, Seats:45, time:PY_VAR9, date :PY_VAR8
+('Name :ASHWIN Seats :5 time :PY_VAR9', ' date :PY_VAR8')

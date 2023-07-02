@@ -97,18 +97,13 @@ def run2(customer):
                     f.write(notification)
 
                 with open(path2, "a") as f:
-                    reserve = f"Name :{username}, Seats:{customer_seats}, time:{time}, date :{date}"
-                    f.write(reserve)
+                    reserve = "Name :" + str(username) + " Seats :" + str(customer_seats) + " time :" + str(time), " date :" + str(date)
+                    f.write(str(reserve))
                 with open(path3, "a") as f:
-                    notification = (
-                        str(last_user)
-                        + " has booked "
-                        + str(customer_seats)
-                        + f" seats at {tt} on {day}.{month}.{year}!\n"
-                    )
+                    notification = str(last_user) + " has booked " + str(customer_seats) + f" seats at {tt} on {day}.{month}.{year}!\n"
                     f.write(notification)
                 messagebox.showinfo(
-                    "Seats Booked", f"{customer_seats} has been booked!"
+                    "Seats Booked", f"{customer_seats} seats has been booked!"
                 )
                 win.destroy()
                 send_notification()
