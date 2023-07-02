@@ -17,7 +17,7 @@ class LinkedList:
             while ele._next is not None:
                 ele = ele._next
             ele._next = new_node
-
+            
     def __getitem__(self, index):
         element = self._head
         for i in range(index):
@@ -32,5 +32,10 @@ class LinkedList:
             
     
 
-
-    
+l1 = LinkedList()
+l1.append(10)
+l1.append(20)
+l1.append(30)
+l1.display()
+print("\n")
+print(l1[3])
