@@ -42,9 +42,9 @@ def run1():
         data.append(customer)
         string = ""
         cust = data._head
-        while cust._next is not None:
-            cust = cust._next
+        while cust is not None:       
             string += cust._item.attributes() + "\n"
+            cust = cust._next
         return string
 
     # Main Code!
@@ -76,4 +76,3 @@ def run1():
 
     win1.mainloop()
     # Running of second window!
-   

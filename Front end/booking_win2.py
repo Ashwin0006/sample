@@ -3,6 +3,7 @@ from tkinter import messagebox
 from linklist import *
 from functools import partial
 from notification import send_notification
+from payment import run_pay
 import datetime
 import os
 
@@ -11,7 +12,6 @@ path = os.path.join(".", "Front end\\data", "seats.txt")
 with open(path, "r") as f:
     for line in f:
         seats = int(line)
-
 
 def check_time(time, day, month, year):
     try:
@@ -77,36 +77,38 @@ def run2(customer):
                         "Seats not available!",
                         "Seats are currently occupied Please try again later!",
                     )
-                seats -= customer_seats
-
-                path1 = os.path.join(
-                    ".", "Front end\\data", "customer_notifications.txt"
-                )
-                path2 = os.path.join(".", "Front end\\data", "booked_tables.txt")
-                path3 = os.path.join(".", "Front end\\data", "hotel_notifications.txt")
-
-                last_user = eval(customer.attributes())
-                username = last_user[0]
-                with open(path1, "a") as f:
-                    notification = (
-                        username
-                        + " has booked "
-                        + str(customer_seats)
-                        + f" seats at {tt} on {day}.{month}.{year}!\n"
-                    )
-                    f.write(notification)
-
-                with open(path2, "a") as f:
-                    reserve = "Name :" + str(username) + " Seats :" + str(customer_seats) + " time :" + str(time), " date :" + str(date)
-                    f.write(str(reserve))
-                with open(path3, "a") as f:
-                    notification = str(last_user) + " has booked " + str(customer_seats) + f" seats at {tt} on {day}.{month}.{year}!\n"
-                    f.write(notification)
-                messagebox.showinfo(
-                    "Seats Booked", f"{customer_seats} seats has been booked!"
-                )
                 win.destroy()
-                send_notification()
+                run_pay(customer_seats)
+                from payment import flag
+                if(flag):
+                    seats -= customer_seats
+                    path1 = os.path.join(
+                        ".", "Front end\\data", "customer_notifications.txt"
+                    )
+                    path2 = os.path.join(".", "Front end\\data", "booked_tables.txt")
+                    path3 = os.path.join(".", "Front end\\data", "hotel_notifications.txt")
+
+                    last_user = eval(customer.attributes())
+                    username = last_user[0]
+                    with open(path1, "a") as f:
+                        notification = (
+                            username
+                            + " has booked "
+                            + str(customer_seats)
+                            + f" seats at {tt} on {day}.{month}.{year}!\n"
+                        )
+                        f.write(notification)
+
+                    with open(path2, "a") as f:
+                        reserve = "Name :" + username + " Seats :" + str(customer_seats) + " time :" + str(tt) + " date :" + str(dt) + "\n"
+                        f.write(reserve)
+                    with open(path3, "a") as f:
+                        notification = str(last_user) + " has booked " + str(customer_seats) + f" seats at {tt} on {day}.{month}.{year}!\n"
+                        f.write(notification)
+                    messagebox.showinfo(
+                        "Seats Booked", f"{customer_seats} seats has been booked!"
+                    )
+                    send_notification()
 
     win = Tk()
     win.title("Table Reservation System")
