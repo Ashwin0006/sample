@@ -8,7 +8,14 @@ import datetime
 import os
 
 
+
+# Paths change according to system
 path = os.path.join(".", "Front end\\data", "seats.txt")
+path1 = os.path.join(".", "Front end\\data", "customer_notifications.txt")
+path2 = os.path.join(".", "Front end\\data", "booked_tables.txt")
+path3 = os.path.join(".", "Front end\\data", "hotel_notifications.txt")
+
+
 with open(path, "r") as f:
     for line in f:
         seats = int(line)
@@ -56,7 +63,7 @@ def run2(customer):
             messagebox.showinfo("Seats full", "All Seats are Occupied!")
 
     def book(req_seats, available, date, time):
-        global seats
+        global seats, path1, path2, path3
         dt = date.get()
         tt = time.get()
         if tt.isdigit():
@@ -82,12 +89,6 @@ def run2(customer):
                 from payment import flag
                 if(flag):
                     seats -= customer_seats
-                    path1 = os.path.join(
-                        ".", "Front end\\data", "customer_notifications.txt"
-                    )
-                    path2 = os.path.join(".", "Front end\\data", "booked_tables.txt")
-                    path3 = os.path.join(".", "Front end\\data", "hotel_notifications.txt")
-
                     last_user = eval(customer.attributes())
                     username = last_user[0]
                     with open(path1, "a") as f:

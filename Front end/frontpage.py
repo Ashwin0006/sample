@@ -6,8 +6,9 @@ from booking_win2 import run2
 
 
 data = None
+path = r"Front end\data\data.txt"
 
-with open(r"Front end\data\data.txt", "r") as file:
+with open(path, "r") as file:
     nested_data = file.readlines()
 
 

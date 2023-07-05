@@ -3,7 +3,8 @@ from tkinter import messagebox
 from hashtable import HashTable
 from functools import partial
 
-
+# Paths change according to system
+path  = r"Front end\data\data.txt"
 def get_data(phno, ht):
     key = int(phno.get())
     if(ht[key] != False):
@@ -17,7 +18,7 @@ def get_data(phno, ht):
 
 if(__name__ == "__main__"):
     ht = HashTable(10)
-    with open(r"Front end\data\data.txt", "r") as file:
+    with open(path, "r") as file:
         for line in file:
             if(line != "\n"):
                 data = eval(line)

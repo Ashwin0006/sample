@@ -6,12 +6,20 @@ from cutomerclass import *
 import os
 from booking_win2 import run2
 
+
+# Paths change according to system
 path = os.path.join(".", "Front end\\data", "id_data.txt")
+path1 = os.path.join(".", "Front end\\data", "data.txt")
+path2 = os.path.join(".", "Front end\\data", "id_data.txt")
+
 with open(path, "r") as file:
     for id in file:
         if id != "\n":
             identity = int(id)
+
+
 def run1():
+    global path1, path2
     # Data Storage!
     data = LinkedList()
     def signup(name, phno, mail, pwd):
@@ -26,11 +34,10 @@ def run1():
             identity += 1
 
             details = add_data(customer)
-            path1 = os.path.join(".", "Front end\\data", "data.txt")
+            
             with open(path1, "a") as file:
                 file.write(details)
-            
-            path2 = os.path.join(".", "Front end\\data", "id_data.txt")
+           
             with open(path2, "a") as file:
                 file.write("\n")
                 file.write(str(identity))
