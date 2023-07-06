@@ -8,11 +8,11 @@ class HashTable:
     
     def resize(self):
         self._cap = self._cap * 2
-        temp = [None] * self._cap
+        temp = HashTable(self._cap)
         for i in range(len(self._items)):
             if self._items[i] is not None:
-                temp[i] = self._items[i]
-        self._items = temp
+                temp.add(self._items[i][1], self._items[i])
+        self._items = temp._items
 
     def add(self, key, val):
         if(None not in self._items):
