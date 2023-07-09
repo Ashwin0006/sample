@@ -8,7 +8,6 @@ import datetime
 import os
 
 
-
 # Paths change according to system
 path = os.path.join(".", "Front end\\data", "seats.txt")
 path1 = os.path.join(".", "Front end\\data", "customer_notifications.txt")
@@ -19,6 +18,7 @@ path3 = os.path.join(".", "Front end\\data", "hotel_notifications.txt")
 with open(path, "r") as f:
     for line in f:
         seats = int(line)
+
 
 def check_time(time, day, month, year):
     try:
@@ -39,15 +39,17 @@ def check_time(time, day, month, year):
         return False
     if int(today[1]) != month:
         messagebox.showerror(
-            "Invalid month", "Reservation acn only be done thsi month!"
+            "Invalid month", "Reservation can only be done this month!"
         )
         return False
     if int(today[0]) != year:
-        messagebox.showerror("Invalid date", "Reservation can occur only this year!")
+        messagebox.showerror(
+            "Invalid date", "Reservation can occur only this year!")
         return False
     time = time.split(":")
     if int(time[0]) > 22 or int(time[0]) < 8:
-        messagebox.showerror("Invalid time", "Hotel working time is from 8:00 to 22:00")
+        messagebox.showerror(
+            "Invalid time", "Hotel working time is from 8:00 to 22:00")
         return False
     if int(time[1]) > 60 or int(time[1]) < 0:
         messagebox.showerror("Invalid time", "Please enter valid time!")
@@ -67,7 +69,8 @@ def run2(customer):
         dt = date.get()
         tt = time.get()
         if tt.isdigit():
-            messagebox.showerror("Invalid time", "Please enter proper time format!")
+            messagebox.showerror(
+                "Invalid time", "Please enter proper time format!")
         else:
             dt = dt.split(".")
             day = int(dt[0])
@@ -87,7 +90,7 @@ def run2(customer):
                 win.destroy()
                 run_pay(customer_seats)
                 from payment import flag
-                if(flag):
+                if (flag):
                     seats -= customer_seats
                     last_user = eval(customer.attributes())
                     username = last_user[0]
@@ -101,10 +104,13 @@ def run2(customer):
                         f.write(notification)
 
                     with open(path2, "a") as f:
-                        reserve = "Name :" + username + " Seats :" + str(customer_seats) + " time :" + str(tt) + " date :" + str(dt) + "\n"
+                        reserve = "Name :" + username + " Seats :" + \
+                            str(customer_seats) + " time :" + \
+                            str(tt) + " date :" + str(dt) + "\n"
                         f.write(reserve)
                     with open(path3, "a") as f:
-                        notification = str(last_user) + " has booked " + str(customer_seats) + f" seats at {tt} on {day}.{month}.{year}!\n"
+                        notification = str(last_user) + " has booked " + str(
+                            customer_seats) + f" seats at {tt} on {day}.{month}.{year}!\n"
                         f.write(notification)
                     messagebox.showinfo(
                         "Seats Booked", f"{customer_seats} seats has been booked!"
@@ -113,37 +119,41 @@ def run2(customer):
 
     win = Tk()
     win.title("Table Reservation System")
-    win.geometry("400x500")
+    win.geometry("650x400")
 
-    Label(win, text="Table Reservation System", font=(25)).grid(
-        row=0, column=0, padx=5, pady=10
+    Label(win, text="Welcome to Table Reservations",
+          font=("Copperplate Gothic Bold", 18), fg="Brown").grid(
+        row=0, column=0, padx=15, pady=20, columnspan=2
     )
-    available = Label(win, text=f"Available seats :{seats}", font=(25))
-    available.grid(row=1, column=0)
+    available = Label(
+        win, text=f"Available seats :{seats}", font=("Segoe UI bold", 14), fg="dark green")
+    available.grid(row=1, column=0, columnspan=2, pady=15)
 
-    requiredseats_label = Label(win, text="Please Enter the number of seats :").grid(
+    requiredseats_label = Label(win, text="Please Enter the number of seats :", font=("Segoe UI bold", 14)).grid(
         row=2, column=0, padx=5, pady=10
     )
     required_seats = IntVar()
-    requiredseats_entry = Entry(win, textvariable=required_seats).grid(
+    requiredseats_entry = Entry(win, textvariable=required_seats, font=("Verdana", 13)).grid(
         row=2, column=1, padx=5, pady=10
     )
 
-    datelabel = Label(win, text="Enter date(example: 2.7.2023) :").grid(
+    datelabel = Label(win, text="Enter date(example: 2.7.2023) :", font=("Segoe UI bold", 14)).grid(
         row=3, column=0, padx=5, pady=10
     )
     date = StringVar()
-    date_entry = Entry(win, textvariable=date).grid(row=3, column=1, padx=5, pady=10)
+    date_entry = Entry(win, textvariable=date, font=("Verdana", 13)).grid(
+        row=3, column=1, padx=5, pady=10)
 
-    timelabel = Label(win, text="Enter time(example: 14:30) :").grid(
+    timelabel = Label(win, text="Enter time(example: 14:30) :", font=("Segoe UI bold", 14)).grid(
         row=4, column=0, padx=5, pady=10
     )
     time = StringVar()
-    time_entry = Entry(win, textvariable=time).grid(row=4, column=1, padx=5, pady=10)
+    time_entry = Entry(win, textvariable=time, font=("Verdana", 13)).grid(
+        row=4, column=1, padx=5, pady=10)
 
     submit = partial(book, required_seats, available, date, time)
-    submit_button = Button(win, text="BOOK", command=submit).grid(
-        row=5, column=0, padx=5, pady=10
+    submit_button = Button(win, text="BOOK", command=submit, font=("Segoe UI bold", 14), fg="white", bg="green").grid(
+        row=5, column=0, pady=20, columnspan=2
     )
     win.mainloop()
 

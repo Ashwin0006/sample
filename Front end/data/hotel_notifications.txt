@@ -1,3 +1,0 @@
-
-['ASHWIN', '9363011172', 'Ash@gmail.com', '1234', 0] has booked 5 seats at 13:30 on 4.7.2023!
-['AK', '1234567890', 'ak@gmail.in', '4321', 1] has booked 5 seats at 13:30 on 4.7.2023!

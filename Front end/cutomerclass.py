@@ -20,9 +20,11 @@ def check_qty(ph_no_data, mail_data):
         )
         return False
     if not (
-        (mail_data.endswith(".com") or mail_data.endswith(".in")) and ("@" in mail_data)
+        (mail_data.endswith(".com") or mail_data.endswith(
+            ".in")) and ("@" in mail_data)
     ):
-        messagebox.showerror("Invalid Email id", "Please Enter valid Email Id!")
+        messagebox.showerror("Invalid Email id",
+                             "Please Enter valid Email Id!")
         return False
     return True
 
@@ -32,8 +34,9 @@ def check_user(customer):
     with open("Front end\\data\\data.txt", "r") as file:
         nested_data = file.readlines()
     for detail in nested_data:
-        if(detail != "\n"):
+        if (detail != "\n"):
             attribute = eval(detail)
             if attribute[1] == details[1]:
-                messagebox.showerror("User already exists", "User with Phone Number already exists please Login!")
+                messagebox.showerror(
+                    "User already exists", "User with Phone Number already exists please Login!")
                 exit(0)

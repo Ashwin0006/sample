@@ -1,2 +1,0 @@
-Name :ASHWIN Seats :5 time :13:30 date :['4', '7', '2023']
-Name :AK Seats :5 time :13:30 date :['4', '7', '2023']
