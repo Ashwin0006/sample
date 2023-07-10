@@ -1,20 +1,24 @@
-from twilio.rest import Client
+from hashtable1 import HashTable
+from tkinter import *
+from tkinter import messagebox
+from Queue import Queue
+from functools import partial
 
-# Twilio account credentials
-account_sid = 'YOUR_TWILIO_ACCOUNT_SID'
-auth_token = 'YOUR_TWILIO_AUTH_TOKEN'
-twilio_phone_number = 'YOUR_TWILIO_PHONE_NUMBER'
+path = r"Front end\data\data.txt"
+with open(path, "r") as file:
+    lst = file.readlines()
+    lst = lst[1:]
 
 class WaitlistManager:
     def __init__(self):
-        self.waitlist = []
+        self.waitlist = Queue()
 
     def add_to_waitlist(self, name):
-        self.waitlist.append(name)
+        self.waitlist.enqueue(name)
 
     def remove_from_waitlist(self):
         if not self.is_empty():
-            return self.waitlist.pop(0)
+            return self.waitlist.dequeue()
         else:
             return None
 
@@ -26,51 +30,72 @@ class WaitlistManager:
             print("The waitlist is empty")
         else:
             print("Waitlist:")
-            for name in self.waitlist:
-                print(name)
-
+            for hashtable in self.waitlist.getqueue():
+                print(hashtable["name"], hashtable["phone_number"])
+    
+    def __str__(self):
+        string = ""
+        if self.is_empty():
+           return string
+        else:
+            string += "Waitlist:\n"
+            for hashtable in self.waitlist.getqueue():
+                string += str(hashtable["name"]) + ", " + str(hashtable["phone_number"])
+        return string
+    
+    def string(self):
+        string = ""
+        if self.is_empty():
+           return string
+        else:
+            string += "Waitlist:\n"
+            for hashtable in self.waitlist.getqueue():
+                string += str(hashtable["name"]) + " - " + str(hashtable["phone_number"]) + "\n"
+        return string
+    
     def release_from_waitlist(self):
         if not self.is_empty():
-            released_person = self.waitlist.pop(0)
-            self.send_notification(released_person)
+            released_person = self.waitlist.dequeue()
             return released_person
         else:
             return None
 
-    def send_notification(self, person):
-        # Initialize the Twilio client
-        client = Client(account_sid, auth_token)
-
-        # Assuming the person's phone number is stored along with their name
-        phone_number = person.get('phone_number')
-
-        # Customize the SMS message content
-        message = client.messages.create(
-            body=f"Hello {person['name']}, you have been released from the waitlist.",
-            from_=twilio_phone_number,
-            to=phone_number
-        )
-
-        print(f"Notification sent to {person['name']} at {phone_number}.")
-
+def release(waitlist_manager):
+    global WaitlistLabel
+    released_person = waitlist_manager.remove_from_waitlist()
+    WaitlistLabel.destroy()
+    txt = waitlist_manager.string()
+    if(txt is None or txt == ""):
+        txt = "Wait List is Empty!"
+    label = Label(win, text=txt, font=("Segoe UI bold", 16), fg="dark green")
+    label.grid(row=0, column=0, padx=20, pady=20, columnspan=2)
+    WaitlistLabel = label
+    
 
 #TESTCASES
 waitlist_manager = WaitlistManager()
 
-# Adding customers
-waitlist_manager.add_to_waitlist({"name": "Dhoni", "phone_number": "+1234567890"})
-waitlist_manager.add_to_waitlist({"name": "Kohli", "phone_number": "+9876543210"})
-waitlist_manager.add_to_waitlist({"name": "Sachin", "phone_number": "+1122334455"})
+#HashTable implementations
+for details in lst:
+    detail = eval(details)
+    hash_table = HashTable()
+    hash_table.add("name", detail[0])
+    hash_table.add("phone_number", detail[1])
+    #Adding Customers!
+    waitlist_manager.add_to_waitlist(hash_table)
 
-# Printing 
-waitlist_manager.print_waitlist()
+win = Tk()
+win.title("Wait List Management")
+win.geometry("400x400")
 
+
+lst = waitlist_manager.string()
+WaitlistLabel = Label(win, text=lst, font=("Segoe UI bold", 16), fg="dark green")
+WaitlistLabel.grid(row=0, column=0, padx=20, pady=20, columnspan=2)
 
 # Releasing and sending notification
-released_person = waitlist_manager.release_from_waitlist()
-if released_person:
-    print("Released person:", released_person['name'])
+remove = partial(release, waitlist_manager)
+rem_but = Button(win, text="Release User", command=remove).grid(row=2, column=0, padx=20, pady=12, columnspan=2)
 
 
-# Printing the updated waitlist
-waitlist_manager.print_waitlist()
+win.mainloop()

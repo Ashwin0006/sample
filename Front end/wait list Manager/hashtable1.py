@@ -4,7 +4,17 @@ class HashTable:
         self._cap = capacity
     
     def hash_func(self, key, probe):
-        return (key + probe) % self._cap
+        if(key.isdigit()):
+            return (key + probe) % self._cap
+        else:
+            if(len(key) >= 3):
+                val = 1 * ord(key[0]) + 27 * ord(key[1]) + 729 * ord(key[2])
+                return (val + probe) % self._cap
+            else:
+                val = 0
+                for i in range(len(key)):
+                    val += (27**i) * ord(key[i])
+                return (val + probe) % self._cap           
     
     def resize(self):
         self._cap = self._cap * 2
@@ -30,11 +40,11 @@ class HashTable:
         count = 0
         while(1):
             index = self.hash_func(key, probe)
-            if(self._items[index] != None and self._items[index][1] == str(key)):
+            if(self._items[index] != None):
                 return self._items[index]
             probe = pow(probe+1, 2)
             count += 1
-            if(count > self._cap):
+            if(count >= self._cap):
                 print("Element is Not present")
                 return False
             
