@@ -80,7 +80,7 @@ def run2(customer):
             messagebox.showinfo("Seats full", "All Seats are Occupied!")
             return False
         if(customer_seats <= 0 or customer_seats > seats):
-            messagebox.showerror("Invalid Input","Please Enter Valid seat number!")
+            messagebox.showerror("Invalid Input","Please Enter Valid Number of seats!")
             return False
         else:
             return True

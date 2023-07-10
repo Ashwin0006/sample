@@ -29,7 +29,7 @@ def check_qty(ph_no_data, mail_data, name_data, password):
         messagebox.showerror("Invalid Name", "Username cannot be empty!")
         return False
     if(not name_data.isalpha()):
-        messagebox.showerror("Invalid Name", "Username should be only Alphabets!")
+        messagebox.showerror("Invalid Name", "Username should contain only Alphabets!")
         return False
     if(password == ""):
         messagebox.showerror("Invalid Password",
