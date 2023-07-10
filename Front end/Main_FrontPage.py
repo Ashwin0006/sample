@@ -43,7 +43,7 @@ def gologin():
         run2(customer)
     else:
         messagebox.showerror("Invalid credentials",
-                             "Please Enter proper details!")
+                            "Please Enter proper details!")
 
 
 if __name__ == "__main__":
@@ -52,9 +52,9 @@ if __name__ == "__main__":
     win.geometry("500x600")
 
     Label(win, text="Welcome to Table Reservations",
-          font=("Copperplate Gothic Bold", 18), fg="Brown").grid(row=0, column=0, padx=20, pady=20, columnspan=2)
+        font=("Copperplate Gothic Bold", 18), fg="Brown").grid(row=0, column=0, padx=20, pady=20, columnspan=2)
     Label(win, text="Login if you already have an account!",
-          font=("Georgia Italic", 14)).grid(row=2, column=0, columnspan=2, padx=30, pady=20)
+        font=("Georgia Italic", 14)).grid(row=2, column=0, columnspan=2, padx=30, pady=20)
 
     namelabel = Label(win, text="Username :", font=(
         "Segoe UI bold", 14)).grid(row=5, column=0, padx=5, pady=10)

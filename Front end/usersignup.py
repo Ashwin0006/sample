@@ -29,7 +29,7 @@ def run1():
         mail_data = mail.get()
         name_data = name.get()
         password = pwd.get()
-        if (check_qty(ph_no_data, mail_data)):
+        if (check_qty(ph_no_data, mail_data, name_data, password)):
             customer = Customer(name_data, ph_no_data,
                                 mail_data, password, identity)
             check_user(customer)

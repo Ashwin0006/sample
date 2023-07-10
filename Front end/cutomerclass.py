@@ -1,6 +1,5 @@
 from tkinter import messagebox
 
-
 class Customer:
     def __init__(self, name, phno, mail_id, password, identity):
         self._name = name.upper()
@@ -13,7 +12,7 @@ class Customer:
         return str([self._name, self._phno, self._mail, self._pass, self._id])
 
 
-def check_qty(ph_no_data, mail_data):
+def check_qty(ph_no_data, mail_data, name_data, password):
     if (len(ph_no_data)) != 10 or ph_no_data.isdigit() != True:
         messagebox.showerror(
             "Invalid Phone number!", "Please Enter valid Phone Number!"
@@ -25,6 +24,16 @@ def check_qty(ph_no_data, mail_data):
     ):
         messagebox.showerror("Invalid Email id",
                              "Please Enter valid Email Id!")
+        return False
+    if(name_data == ""):
+        messagebox.showerror("Invalid Name", "Username cannot be empty!")
+        return False
+    if(not name_data.isalpha()):
+        messagebox.showerror("Invalid Name", "Username should be only Alphabets!")
+        return False
+    if(password == ""):
+        messagebox.showerror("Invalid Password",
+                             "Password Field should not be Blank!")
         return False
     return True
 

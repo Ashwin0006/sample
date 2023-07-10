@@ -19,7 +19,6 @@ with open(path, "r") as f:
     for line in f:
         seats = int(line)
 
-
 def check_time(time, day, month, year):
     try:
         date = datetime.datetime(year, month, day)
@@ -38,31 +37,53 @@ def check_time(time, day, month, year):
         )
         return False
     if int(today[1]) != month:
+        if int(today[2]) <= 31 and int(today[2] >= 28):
+               return True
+        if(int(today[1]) == 2):
+            if int(today[2]) <= 29 and int(today[2] >= 27):
+               return True
         messagebox.showerror(
             "Invalid month", "Reservation can only be done this month!"
         )
         return False
     if int(today[0]) != year:
+        if(int(today[1]) == 12):
+            if int(today[2]) <= 31 and int(today[2] >= 29):
+               return True
         messagebox.showerror(
             "Invalid date", "Reservation can occur only this year!")
         return False
-    time = time.split(":")
-    if int(time[0]) > 22 or int(time[0]) < 8:
+    #Time Handling !
+    time_list = time.split(":")
+    now = datetime.datetime.now()
+    current_time = now.strftime("%H:%M")
+    if int(time_list[0]) > 22 or int(time_list[0]) < 8:
         messagebox.showerror(
             "Invalid time", "Hotel working time is from 8:00 to 22:00")
         return False
-    if int(time[1]) > 60 or int(time[1]) < 0:
+    if int(time_list[1]) >= 60 or int(time_list[1]) < 0:
         messagebox.showerror("Invalid time", "Please enter valid time!")
         return False
+    if(day == int(today[2])):
+        if(current_time >= time):
+            messagebox.showerror("Invalid time", "Please enter future time!")
+            return False           
     return True
 
 
+
 def run2(customer):
-    def check():
+    def check(customer_seats):
         global seats
         if seats <= 0:
             win.destroy()
             messagebox.showinfo("Seats full", "All Seats are Occupied!")
+            return False
+        if(customer_seats <= 0 or customer_seats > seats):
+            messagebox.showerror("Invalid Input","Please Enter Valid seat number!")
+            return False
+        else:
+            return True
 
     def book(req_seats, available, date, time):
         global seats, path1, path2, path3
@@ -78,10 +99,10 @@ def run2(customer):
             year = int(dt[2])
             customer_seats = int(req_seats.get())
             available.destroy()
-            available = Label(win, text=f"Available seats :{seats}", font=(25))
-            available.grid(row=1, column=0, padx=5, pady=10)
-            check()
-            if check_time(tt, day, month, year):
+            available = Label(win, text=f"Available seats :{seats}", font=("Segoe UI bold", 14))
+            available.grid(row=2, column=0, columnspan=2, pady=15)
+            check(customer_seats)
+            if check_time(tt, day, month, year) and check(customer_seats):
                 if customer_seats > seats:
                     messagebox.showerror(
                         "Seats not available!",
@@ -119,41 +140,45 @@ def run2(customer):
 
     win = Tk()
     win.title("Table Reservation System")
-    win.geometry("650x400")
+    win.geometry("650x500")
 
     Label(win, text="Welcome to Table Reservations",
           font=("Copperplate Gothic Bold", 18), fg="Brown").grid(
         row=0, column=0, padx=15, pady=20, columnspan=2
     )
+    Label(win, text="Reservation Available only within 2 days!\nWorking Time : 8:00 to 22:00",
+          font=("Copperplate Gothic Bold", 18), fg="Brown").grid(
+        row=1, column=0, padx=15, pady=20, columnspan=2
+    )
     available = Label(
         win, text=f"Available seats :{seats}", font=("Segoe UI bold", 14), fg="dark green")
-    available.grid(row=1, column=0, columnspan=2, pady=15)
+    available.grid(row=2, column=0, columnspan=2, pady=15)
 
     requiredseats_label = Label(win, text="Please Enter the number of seats :", font=("Segoe UI bold", 14)).grid(
-        row=2, column=0, padx=5, pady=10
+        row=3, column=0, padx=5, pady=10
     )
     required_seats = IntVar()
     requiredseats_entry = Entry(win, textvariable=required_seats, font=("Verdana", 13)).grid(
-        row=2, column=1, padx=5, pady=10
+        row=3, column=1, padx=5, pady=10
     )
 
     datelabel = Label(win, text="Enter date(example: 2.7.2023) :", font=("Segoe UI bold", 14)).grid(
-        row=3, column=0, padx=5, pady=10
+        row=4, column=0, padx=5, pady=10
     )
     date = StringVar()
     date_entry = Entry(win, textvariable=date, font=("Verdana", 13)).grid(
-        row=3, column=1, padx=5, pady=10)
+        row=4, column=1, padx=5, pady=10)
 
     timelabel = Label(win, text="Enter time(example: 14:30) :", font=("Segoe UI bold", 14)).grid(
-        row=4, column=0, padx=5, pady=10
+        row=5, column=0, padx=5, pady=10
     )
     time = StringVar()
     time_entry = Entry(win, textvariable=time, font=("Verdana", 13)).grid(
-        row=4, column=1, padx=5, pady=10)
+        row=5, column=1, padx=5, pady=10)
 
     submit = partial(book, required_seats, available, date, time)
     submit_button = Button(win, text="BOOK", command=submit, font=("Segoe UI bold", 14), fg="white", bg="green").grid(
-        row=5, column=0, pady=20, columnspan=2
+        row=6, column=0, pady=20, columnspan=2
     )
     win.mainloop()
 
