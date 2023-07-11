@@ -4,7 +4,7 @@ from tkinter import messagebox
 from functools import partial
 
 
-path = r"Front end/data/hotel_notifications.txt"
+path = r"Front end\data\waitlist.txt"
 with open(path, "r") as file:
     data = LinkedList()
     lst = file.readlines()
@@ -42,6 +42,7 @@ def check_no(phno):
 
 win = Tk()
 win.geometry("500x500")
+win.title("Guest Profile History")
 
 Label(win, text="Enter Phone Number to Check Reservation", font=("Segoe UI bold", 16), fg="dark green").grid(
     row=0, column=0, padx=20, pady=20, columnspan=2)

@@ -67,7 +67,7 @@ def release(waitlist_manager):
     txt = waitlist_manager.string()
     if(txt is None or txt == ""):
         txt = "Wait List is Empty!"
-    label = Label(win, text=txt, font=("Segoe UI bold", 16), fg="dark green")
+    label = Label(win, text=txt, font=("Segoe UI bold", 16), fg="Black")
     label.grid(row=0, column=0, padx=20, pady=20, columnspan=2)
     WaitlistLabel = label
     
@@ -90,7 +90,7 @@ win.geometry("400x400")
 
 
 lst = waitlist_manager.string()
-WaitlistLabel = Label(win, text=lst, font=("Segoe UI bold", 16), fg="dark green")
+WaitlistLabel = Label(win, text=lst, font=("Segoe UI bold", 16), fg="Black")
 WaitlistLabel.grid(row=0, column=0, padx=20, pady=20, columnspan=2)
 
 # Releasing and sending notification
