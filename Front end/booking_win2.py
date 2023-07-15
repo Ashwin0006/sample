@@ -6,7 +6,7 @@ from notification import send_notification
 from payment import run_pay
 import datetime
 import os
-
+from waitlistmanager.waitlistaadd import run5
 
 # Paths change according to system
 path = os.path.join(".", "Front end\\data", "seats.txt")
@@ -18,6 +18,7 @@ path3 = os.path.join(".", "Front end\\data", "hotel_notifications.txt")
 with open(path, "r") as f:
     for line in f:
         seats = int(line)
+
 
 def check_time(time, day, month, year):
     try:
@@ -38,22 +39,22 @@ def check_time(time, day, month, year):
         return False
     if int(today[1]) != month:
         if int(today[2]) <= 31 and int(today[2] >= 28):
-               return True
-        if(int(today[1]) == 2):
+            return True
+        if (int(today[1]) == 2):
             if int(today[2]) <= 29 and int(today[2] >= 27):
-               return True
+                return True
         messagebox.showerror(
             "Invalid month", "Reservation can only be done this month!"
         )
         return False
     if int(today[0]) != year:
-        if(int(today[1]) == 12):
+        if (int(today[1]) == 12):
             if int(today[2]) <= 31 and int(today[2] >= 29):
-               return True
+                return True
         messagebox.showerror(
             "Invalid date", "Reservation can occur only this year!")
         return False
-    #Time Handling !
+    # Time Handling !
     time_list = time.split(":")
     now = datetime.datetime.now()
     current_time = now.strftime("%H:%M")
@@ -64,12 +65,11 @@ def check_time(time, day, month, year):
     if int(time_list[1]) >= 60 or int(time_list[1]) < 0:
         messagebox.showerror("Invalid time", "Please enter valid time!")
         return False
-    if(day == int(today[2])):
-        if(current_time >= time):
+    if (day == int(today[2])):
+        if (current_time >= time):
             messagebox.showerror("Invalid time", "Please enter future time!")
-            return False           
+            return False
     return True
-
 
 
 def run2(customer):
@@ -78,9 +78,11 @@ def run2(customer):
         if seats <= 0:
             win.destroy()
             messagebox.showinfo("Seats full", "All Seats are Occupied!")
+            run5()
             return False
-        if(customer_seats <= 0 or customer_seats > seats):
-            messagebox.showerror("Invalid Input","Please Enter Valid Number of seats!")
+        if (customer_seats <= 0 or customer_seats > seats):
+            messagebox.showerror(
+                "Invalid Input", "Please Enter Valid Number of seats!")
             return False
         else:
             return True
@@ -99,7 +101,8 @@ def run2(customer):
             year = int(dt[2])
             customer_seats = int(req_seats.get())
             available.destroy()
-            available = Label(win, text=f"Available seats :{seats}", font=("Segoe UI bold", 14))
+            available = Label(
+                win, text=f"Available seats :{seats}", font=("Segoe UI bold", 14))
             available.grid(row=2, column=0, columnspan=2, pady=15)
             check(customer_seats)
             if check_time(tt, day, month, year) and check(customer_seats):
@@ -162,7 +165,7 @@ def run2(customer):
         row=3, column=1, padx=5, pady=10
     )
 
-    datelabel = Label(win, text="Enter date(example: 2.7.2023) :", font=("Segoe UI bold", 14)).grid(
+    datelabel = Label(win, text="Enter date(example: 12.7.2023) :", font=("Segoe UI bold", 14)).grid(
         row=4, column=0, padx=5, pady=10
     )
     date = StringVar()

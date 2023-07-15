@@ -1,4 +1,1 @@
-
-USER has booked 10 seats at 18:30 on 10.7.2023!
-ASHWIN has booked 8 seats at 11:30 on 11.7.2023!
-ABC has booked 80 seats at 15:00 on 11.7.2023!
+ASHWIN has booked 10 seats at 13:30 on 12.7.2023!

@@ -4,7 +4,7 @@ from tkinter import messagebox
 from functools import partial
 
 
-path = r"Front end\data\waitlist.txt"
+path = r"Front end\data\hotel_notifications.txt"
 with open(path, "r") as file:
     data = LinkedList()
     lst = file.readlines()

@@ -10,7 +10,7 @@ def get_data(phno, ht):
     if(ht[key] != False):
         data = ht[key]
         print(data)
-        messagebox.showinfo("User Found", f"Name :{data[0]}\nPh.No :{data[1]}\nEmail :{data[2]}\nUser_id :{data[4]}")
+        messagebox.showinfo("User Found", f"Name :{data[0]}\nPh.No :{data[1]}\nEmail :{data[2]}\nPassword:{data[3]}\nUser_id :{data[4]}")
     else:
         messagebox.showerror("User Not found", "User does not exist")
         
