@@ -4,7 +4,7 @@ from linklist import *
 from functools import partial
 from cutomerclass import *
 import os
-from booking_win2 import run2
+from new_Bookingwin import run_new
 
 
 # Paths change according to system
@@ -45,7 +45,7 @@ def run1():
                 file.write(str(identity))
 
             win1.destroy()
-            run2(customer)
+            run_new(customer)
 
     def add_data(customer):
         data.append(customer)
@@ -93,4 +93,3 @@ def run1():
 
     win1.mainloop()
 
-    # Running of second window!

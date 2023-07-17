@@ -18,8 +18,8 @@ with open(path, "r") as file:
                 remaining = i[index:]
                 remaining = remaining.split(" ")
                 for k in range(len(remaining)):
-                    if(remaining[k].isdigit()):
-                        temp.append(int(remaining[k]))
+                    if(remaining[k].startswith("(")):
+                        temp.append(eval(remaining[k]))
                         index = k + 2
                         break
                 remaining = remaining[index:]
@@ -27,6 +27,7 @@ with open(path, "r") as file:
                 date = remaining[-1]
                 date = date[:len(date)-2]
                 temp.append(date)
+                break
         data.append(temp)
 print(data)
 def check_no(phno):

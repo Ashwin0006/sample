@@ -2,7 +2,7 @@ from tkinter import *
 from functools import partial
 from usersignup import run1
 from cutomerclass import *
-from booking_win2 import run2
+from new_Bookingwin import run_new
 
 
 data = None
@@ -40,7 +40,7 @@ def gologin():
     if check_data(username, pno, password):
         win.destroy()
         customer = Customer(data[0], data[1], data[2], data[3], data[4])
-        run2(customer)
+        run_new(customer)
     else:
         messagebox.showerror("Invalid credentials",
                             "Please Enter proper details!")
