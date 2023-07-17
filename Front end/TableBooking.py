@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from functools import partial
-
+from hashtable_string import HashTable
 
 #Paths
 path = r"Front end\data\NewStorage\bookings.txt"
@@ -15,6 +15,7 @@ def booker(win):
     data_seats = data_seats[: len(data_seats)-1]
     data_seats += ")"
     with open(path1, "a") as f:
+        f.write("\n")
         f.write(data_seats)
     win.destroy()
 
@@ -24,14 +25,15 @@ def run_book_table():
         global path
         global data_seats
 
-        if seats[seat_id].cget("bg") == "red":
+        button = seats[seat_id]
+        if button.cget("bg") == "red":
             messagebox.showinfo("Seat Booking", "This seat is already booked.")
-        elif(seats[seat_id].cget("bg") == "green"):
+        elif(button.cget("bg") == "green"):
             confirm = messagebox.askyesno("Seat Booking", f"Book Seat {seat_id}?")         
             if confirm:
                 seats_booked += 1
-                seats[seat_id].config(bg="red")
-                seats[seat_id].config(state="disabled")
+                button.config(bg="red")
+                button.config(state="disabled")
                 messagebox.showinfo("Seat Booking", f"Seat {seat_id} is booked successfully!")
                 temp = seat_id.split("-")
                 data_seats += str([int(temp[0]),int(temp[1])]) + ","
@@ -41,7 +43,7 @@ def run_book_table():
     win = Tk()
     win.title("Seat Booking Window")
     win.geometry("500x500")
-    seats = {}
+    seats = HashTable(100)
     seat_image = PhotoImage(file=r"Front end\images\—Pngtree—blue seat_4881221.png")
     seat_image = seat_image.subsample(45,45)
 
@@ -65,13 +67,15 @@ def run_book_table():
             for lst in tup:
                 if(row == lst[0] and col == lst[1]):
                     seat_id = f"{row}-{col}"
-                    seats[seat_id] = Button(win, image=seat_image, bg="red", state="disabled")
-                    seats[seat_id].grid(row=row, column=col, padx=5, pady=5)
+                    button = Button(win, image=seat_image, bg="red", state="disabled")
+                    seats[seat_id] = button
+                    button.grid(row=row, column=col, padx=5, pady=5)
                     break
                 else:
                     seat_id = f"{row}-{col}"
-                    seats[seat_id] = Button(win, text=seat_id, image=seat_image, bg="green", command=lambda seat=seat_id: book_seat(seat))
-                    seats[seat_id].grid(row=row, column=col, padx=5, pady=5)
+                    button = Button(win, text=seat_id, image=seat_image, bg="green", command=lambda seat=seat_id: book_seat(seat))
+                    seats[seat_id] = button
+                    button.grid(row=row, column=col, padx=5, pady=5)
             
     close = partial(booker, win)
     Button(win, text="Book", command=close).grid(row = row + 2, column = col)
