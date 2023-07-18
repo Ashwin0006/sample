@@ -12,7 +12,7 @@ data_seats = "("
 def booker(win):
     global data_seats
     global path1
-    data_seats = data_seats[: len(data_seats)-1]
+    data_seats = data_seats[:len(data_seats)-2]
     data_seats += ")"
     with open(path1, "a") as f:
         f.write("\n")
@@ -36,7 +36,7 @@ def run_book_table():
                 button.config(state="disabled")
                 messagebox.showinfo("Seat Booking", f"Seat {seat_id} is booked successfully!")
                 temp = seat_id.split("-")
-                data_seats += str([int(temp[0]),int(temp[1])]) + ","
+                data_seats += str([int(temp[0]),int(temp[1])]) + ", "
             else:
                 messagebox.showinfo("Seat Booking", "Seat booking cancelled.")
 

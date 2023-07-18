@@ -8,7 +8,7 @@ import datetime
 import os
 from waitlistmanager.waitlistaadd import run5
 from TableBooking import *
-
+from Cancellation import run_cancel
 
 
 # Paths change according to system
@@ -118,7 +118,7 @@ def run_new(customer):
 
     win = Tk()
     win.title("Table Reservation System")
-    win.geometry("650x500")
+    #win.geometry("650x500")
 
     Label(win, text="Welcome to Table Reservations",
             font=("Copperplate Gothic Bold", 18), fg="Brown").grid(
@@ -134,17 +134,23 @@ def run_new(customer):
     )
     date = StringVar()
     date_entry = Entry(win, textvariable=date, font=("Verdana", 13)).grid(
-        row=4, column=1, padx=5, pady=10)
+        row=4, column=1, pady=10)
 
     timelabel = Label(win, text="Enter time(example: 14:30) :", font=("Segoe UI bold", 14)).grid(
         row=5, column=0, padx=5, pady=10
     )
     time = StringVar()
     time_entry = Entry(win, textvariable=time, font=("Verdana", 13)).grid(
-        row=5, column=1, padx=5, pady=10)
+        row=5, column=1, pady=10)
 
     submit = partial(book, date, time)
     submit_button = Button(win, text="BOOK", command=submit, font=("Segoe UI bold", 14), fg="white", bg="green").grid(
         row=6, column=0, pady=20, columnspan=2
     )
+
+    delete = partial(run_cancel, customer, win)
+    Label(win, text="Please Click On This Button \nIf You Want To Cancel Booked Seats!", font=("Copperplate Gothic Bold", 14), fg="Brown").grid(
+        row=7, column=0, padx=15, pady=20, columnspan=2)
+    delete_button = Button(win, text="Cancel Booked Seats", command=delete, font=("Segoe UI bold", 14), fg="white", bg="green").grid(
+        row=8, column=0, padx = 5, pady=20, columnspan=2)
     win.mainloop()

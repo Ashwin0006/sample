@@ -1,4 +1,1 @@
 
-Name :ASHWIN Seats :([8, 9],[9, 9]) time :13:30 date :['18', '7', '2023']
-Name :TEST Seats :([4, 9],[4, 10]) time :13:30 date :['18', '7', '2023']
-Name :TEST Seats :([8, 10],[9, 10]) time :13:30 date :['18', '7', '2023']

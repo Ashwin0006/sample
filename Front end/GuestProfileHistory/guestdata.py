@@ -8,28 +8,30 @@ path = r"Front end\data\hotel_notifications.txt"
 with open(path, "r") as file:
     data = LinkedList()
     lst = file.readlines()
-    lst = lst[1:]
     for i in lst:
-        for j in i:
-            if(j == "]"):
-                index = i.index(j)+1
-                data_cust = i[:index]
-                temp = eval(data_cust)
-                remaining = i[index:]
-                remaining = remaining.split(" ")
-                for k in range(len(remaining)):
-                    if(remaining[k].startswith("(")):
-                        temp.append(eval(remaining[k]))
-                        index = k + 2
-                        break
-                remaining = remaining[index:]
-                temp.append(remaining[1])
-                date = remaining[-1]
-                date = date[:len(date)-2]
-                temp.append(date)
-                break
-        data.append(temp)
-print(data)
+        if(i != "\n"):
+            for j in i:
+                if(j == "]"):
+                    index = i.index(j)+1
+                    data_cust = i[:index]
+                    temp = eval(data_cust)
+                    remaining = i[index:]
+                    for k in range(len(remaining)):
+                        if(remaining[k] == "("):
+                            index1 = k
+                        elif(remaining[k] == ")"):
+                            index2 = k
+                            break
+                    tup = remaining[index1 : index2 + 1]
+                    temp.append(tup)
+                    remaining = remaining[index2+1 : ].strip()
+                    remaining = remaining.split(" ")
+                    temp.append(remaining[2])
+                    date = remaining[-1]
+                    date = date[:len(date)-1]
+                    temp.append(date)
+                    break
+            data.append(temp)
 def check_no(phno):
     number = phno.get()
     ele = data.search_phno(number)
