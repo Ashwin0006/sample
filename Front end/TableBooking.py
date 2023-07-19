@@ -55,12 +55,12 @@ def run_book_table():
             if(data != "\n"):
                 tup += eval(data)
         
-    for row in range(1, 11):
+    for row in range(1, 10):
         if(row == 3 or row == 7):
             Label(win, text=" ").grid(row=row, column=col, padx=5, pady=5)
             continue
-        for col in range(1, 11):
-            if(col == 4 or col == 8 or (row == 10 and (col == 9 or col ==10)) or (col == 5 and (row == 8 or row == 9 or row ==10))):
+        for col in range(1, 10):
+            if(col == 4 or col == 8) or (col == 5 and (row == 8 or row == 9 or row ==10) or (row == 4 and (col==5 or col==6 or col==7))):
                 Label(win, text=" ").grid(row=row, column=col, padx=5, pady=5)
                 continue
             #Checking for Previous Booked data!
@@ -80,4 +80,4 @@ def run_book_table():
     close = partial(booker, win)
     Button(win, text="Book", command=close).grid(row = row + 2, column = col)
     win.mainloop()
-    
+run_book_table()

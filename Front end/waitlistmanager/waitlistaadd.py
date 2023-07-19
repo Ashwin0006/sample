@@ -55,3 +55,5 @@ def run5():
 
 
     win.mainloop()
+
+run5()

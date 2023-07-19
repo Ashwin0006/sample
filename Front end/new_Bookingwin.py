@@ -6,7 +6,6 @@ from notification import send_notification
 from payment import run_pay
 import datetime
 import os
-from waitlistmanager.waitlistaadd import run5
 from TableBooking import *
 from Cancellation import run_cancel
 

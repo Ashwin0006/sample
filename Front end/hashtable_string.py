@@ -8,8 +8,8 @@ class HashTable:
             return (key + probe) % self._cap
         else:
             if(len(key) >= 3):
-                val = 3 * ord(key[0]) + 5 * ord(key[2])
-                return (val + probe) % self._cap
+                val = int(str(key[0]) + str(key[2]))
+                return val
             else:
                 val = 0
                 for i in range(len(key)):
