@@ -3,6 +3,7 @@ from functools import partial
 from usersignup import run1
 from cutomerclass import *
 from new_Bookingwin import run_new
+from PIL import ImageTk, Image
 
 
 data = None
@@ -49,40 +50,40 @@ def gologin():
 if __name__ == "__main__":
     win = Tk()
     win.title("TABLE RESERVATION SYSTEM")
-    win.geometry("500x600")
+    win.geometry("600x470")
 
-    Label(win, text="Welcome to Table Reservations",
-        font=("Copperplate Gothic Bold", 18), fg="Brown").grid(row=0, column=0, padx=20, pady=20, columnspan=2)
-    Label(win, text="Login if you already have an account!",
-        font=("Georgia Italic", 14)).grid(row=2, column=0, columnspan=2, padx=30, pady=20)
+    canvas = Canvas(win)
+    canvas.pack(fill=BOTH, expand=True)
 
-    namelabel = Label(win, text="Username :", font=(
-        "Segoe UI bold", 14)).grid(row=5, column=0, padx=5, pady=10)
+    bg_image = ImageTk.PhotoImage(Image.open(r"Front end\images\hotel.png"))
+    canvas.create_image(0, 0, anchor=NW, image=bg_image)
+
+    canvas.create_text(300, 50, text="Welcome to Table Reservations", font=("Copperplate Gothic Bold", 18))
+
+    canvas.create_text(300, 100, text="Login if you already have an account!", font=("Georgia Italic", 14), fill="black")
+
+    canvas.create_text(150, 160, text="Username :", font=("Segoe UI bold", 14), fill="Black")
+
     name = StringVar()
-    nameentry = Entry(win, textvariable=name, font=("Verdana", 13)).grid(
-        row=5, column=1, padx=5, pady=10)
+    name_entry = Entry(win, textvariable=name, font=("Verdana", 13), bg="grey")
+    canvas.create_window(350, 160, window=name_entry)
 
-    phnolabel = Label(win, text="Phone Number :", font=(
-        "Segoe UI bold", 14)).grid(row=6, column=0, padx=5, pady=10)
+    canvas.create_text(150, 210, text="Phone Number :", font=("Segoe UI bold", 14))
     phno = StringVar()
-    phnoentry = Entry(win, textvariable=phno, font=("Verdana", 13)).grid(
-        row=6, column=1, padx=5, pady=10)
+    phno_entry = Entry(win, textvariable=phno, font=("Verdana", 13), bg="grey")
+    canvas.create_window(350, 210, window=phno_entry)
 
-    password = Label(win, text="Password :", font=(
-        "Segoe UI bold", 14)).grid(row=7, column=0, padx=5, pady=10)
+    canvas.create_text(150, 260, text="Password :", font=("Segoe UI bold", 14))
     pwd = StringVar()
-    pwdentry = Entry(win, textvariable=pwd, font=("Verdana", 13)).grid(
-        row=7, column=1, padx=5, pady=10)
+    pwd_entry = Entry(win, textvariable=pwd, font=("Verdana", 13), bg="grey")
+    canvas.create_window(350, 260, window=pwd_entry)
 
-    Login = partial(gologin)
-    loginbutton = Button(win, text="Login", command=Login, font=(
-        "Segoe UI bold", 14), fg="white", bg="green").grid(row=8, column=0, columnspan=2, pady=20)
+    login_button = Button(win, text="Login", command=gologin, font=("Segoe UI bold", 14), fg="white", bg="green")
+    canvas.create_window(280, 310, window=login_button)
 
-    Label(win, text="Signup if you are a new user", font=(
-        "Georgia Italic", 14)).grid(row=9, column=0, columnspan=2, pady=30)
+    canvas.create_text(300, 360, text="Signup if you are a new user", font=("Georgia Italic", 20), fill="white")
 
-    take_signup = partial(nextpage)
-    signup = Button(win, text="Signup", command=take_signup,
-                    font=("Segoe UI bold", 14), fg="white", bg="blue").grid(row=10, column=0, columnspan=2)
+    signup_button = Button(win, text="Signup", command=nextpage, font=("Segoe UI bold", 14), fg="white", bg="blue")
+    canvas.create_window(280, 410, window=signup_button)
 
     win.mainloop()

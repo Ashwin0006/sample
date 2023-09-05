@@ -8,6 +8,7 @@ import datetime
 import os
 from TableBooking import *
 from Cancellation import run_cancel
+from PIL import ImageTk, Image
 
 
 # Paths change according to system
@@ -117,39 +118,40 @@ def run_new(customer):
 
     win = Tk()
     win.title("Table Reservation System")
-    #win.geometry("650x500")
+    win.geometry("700x500")
 
-    Label(win, text="Welcome to Table Reservations",
-            font=("Copperplate Gothic Bold", 18), fg="Brown").grid(
-        row=0, column=0, padx=15, pady=20, columnspan=2
-    )
-    Label(win, text="Reservation Available only within 2 days!\nWorking Time : 8:00 to 22:00",
-            font=("Copperplate Gothic Bold", 18), fg="Brown").grid(
-        row=1, column=0, padx=15, pady=20, columnspan=2
-    )
+    canvas = Canvas(win)
+    canvas.pack(fill=BOTH, expand=True)
 
-    datelabel = Label(win, text="Enter date(example: 12.7.2023) :", font=("Segoe UI bold", 14)).grid(
-        row=4, column=0, padx=5, pady=10
-    )
+    bg_image = ImageTk.PhotoImage(Image.open(r"Front end\images\hotel1.jpg"))
+    canvas.create_image(0, 0, anchor=NW, image=bg_image)
+
+    canvas.create_text(325, 50, text="Welcome to Table Reservations", font=("Copperplate Gothic Bold", 18), fill="Black")
+
+    canvas.create_text(325, 100, text="Reservation Available only within 2 days!\nWorking Time : 8:00 to 22:00", 
+                    font=("Copperplate Gothic Bold", 18), fill="Black")
+    
+    today = datetime.date.today()
+    d1 = today.strftime("%d.%m.%Y")
+    canvas.create_text(200, 180, text=f"Enter date(example: {d1}) :", font=("Segoe UI bold", 14))
     date = StringVar()
-    date_entry = Entry(win, textvariable=date, font=("Verdana", 13)).grid(
-        row=4, column=1, pady=10)
+    date_entry = Entry(win, textvariable=date, font=("Verdana", 13), bg="lightblue")
+    canvas.create_window(450, 180, window=date_entry)
 
-    timelabel = Label(win, text="Enter time(example: 14:30) :", font=("Segoe UI bold", 14)).grid(
-        row=5, column=0, padx=5, pady=10
-    )
+    canvas.create_text(200, 220, text="Enter time(example: 14:30) :", font=("Segoe UI bold", 14))
     time = StringVar()
-    time_entry = Entry(win, textvariable=time, font=("Verdana", 13)).grid(
-        row=5, column=1, pady=10)
+    time_entry = Entry(win, textvariable=time, font=("Verdana", 13),bg="lightblue")
+    canvas.create_window(450, 220, window=time_entry)
 
     submit = partial(book, date, time)
-    submit_button = Button(win, text="BOOK", command=submit, font=("Segoe UI bold", 14), fg="white", bg="green").grid(
-        row=6, column=0, pady=20, columnspan=2
-    )
+    submit_button = Button(win, text="BOOK", command=submit, font=("Segoe UI bold", 14), fg="white", bg="green")
+    canvas.create_window(325, 280, window=submit_button)
+
+    canvas.create_text(325, 340, text="Please Click On This Button \nIf You Want To Cancel Booked Seats!", 
+                    font=("Copperplate Gothic Bold", 14), fill="Black")
 
     delete = partial(run_cancel, customer, win)
-    Label(win, text="Please Click On This Button \nIf You Want To Cancel Booked Seats!", font=("Copperplate Gothic Bold", 14), fg="Brown").grid(
-        row=7, column=0, padx=15, pady=20, columnspan=2)
-    delete_button = Button(win, text="Cancel Booked Seats", command=delete, font=("Segoe UI bold", 14), fg="white", bg="green").grid(
-        row=8, column=0, padx = 5, pady=20, columnspan=2)
+    delete_button = Button(win, text="Cancel Booked Seats", command=delete, font=("Segoe UI bold", 14), fg="white", bg="green")
+    canvas.create_window(325, 410, window=delete_button)
+
     win.mainloop()

@@ -52,11 +52,11 @@ Label(win, text="Enter Phone Number to Check Reservation", font=("Segoe UI bold"
 
 
 phno = StringVar()
-number_entry = Entry(win, textvariable=phno, font=("Segoe UI bold", 16), fg="dark green").grid(
+number_entry = Entry(win, textvariable=phno, font=("Segoe UI bold", 16), fg="black").grid(
     row=1, column=0, padx=20, pady=20, columnspan=2)
 
 checker = partial(check_no, phno)
-check_button = Button(win, text="Check", command=checker).grid(
+check_button = Button(win, text="Check", command=checker, font=("Segoe UI bold", 16), fg="white", bg="blue").grid(
     row=3, column=0, padx=20, pady=20, columnspan=2)
 win.mainloop()
 

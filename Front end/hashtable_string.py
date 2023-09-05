@@ -7,9 +7,12 @@ class HashTable:
         if(key.isdigit()):
             return (key + probe) % self._cap
         else:
-            if(len(key) >= 3):
-                val = int(str(key[0]) + str(key[2]))
-                return val
+            if(len(key) > 3):
+                key = key.split("-")
+                val = ""
+                for i in key:
+                    val += i
+                return int(val)
             else:
                 val = 0
                 for i in range(len(key)):

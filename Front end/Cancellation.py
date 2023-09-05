@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 from functools import partial
 from linkedlist import LinkedList
+from PIL import ImageTk, Image
+
 
 path = r"Front end\data\hotel_notifications.txt"
 path1 = r"Front end\data\booked_tables.txt"
@@ -87,8 +89,14 @@ def refund_func(refund, win, seats):
 def run_cancel(customer, win1):
     win1.destroy()
     win = Tk()
-    win.geometry("500x500")
+    win.geometry("400x300")
     win.title("Cancellation of Seats Portal")
+    canvas = Canvas(win)
+    canvas.pack(fill=BOTH, expand=True)
+
+    img = ImageTk.PhotoImage(Image.open(r'Front end\images\canchotel.png'))
+    canvas.create_image(0, 0, anchor="nw", image=img)
+    
 
     phno = customer._phno
     name = customer._name
@@ -101,12 +109,11 @@ def run_cancel(customer, win1):
         Total = Original_Charge * no_seats
         fine = charge * no_seats
         refund = Total - fine
-        Label(win, text = f"Total Seats Booked by {name} is {no_seats}").grid(row=0, column=0)
-        Label(win, text = f"Amount To be Refunded is {refund}").grid(row=1, column=0)
-
+        canvas.create_text(200, 50, text=f"Total Seats Booked by {name} is {no_seats}", font=("Georgia Italic", 14), fill="darkblue")
+        canvas.create_text(200, 100, text=f"Amount To be Refunded is {refund}", font=("Georgia Italic", 14), fill="darkblue")
+        
         canc = partial(refund_func, refund, win, seats)
-        refund_Button = Button(win, text="Cancel and Refund", command = canc).grid(row=2, column=0)
+        refund_button = Button(win, text="Cancel and Refund", command=canc, font=("Segoe UI bold", 14), fg="white", bg="blue")
+        canvas.create_window(200, 150, window=refund_button)
 
     win.mainloop()
-
-

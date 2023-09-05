@@ -5,6 +5,7 @@ from functools import partial
 from cutomerclass import *
 import os
 from new_Bookingwin import run_new
+from PIL import ImageTk, Image
 
 
 # Paths change according to system
@@ -59,37 +60,39 @@ def run1():
     # Main Code!
     win1 = Tk()
     win1.title("User Signup Portal")
-    win1.geometry("700x400")
+    win1.geometry("550x300")
 
-    namelabel = Label(win1, text="Username :", font=(
-        "Segoe UI bold", 14)).grid(row=0, column=0, padx=5, pady=10)
+    canvas1 = Canvas(win1)
+    canvas1.pack(fill=BOTH, expand=True)
+
+    #Adding the images!
+    bg_image = ImageTk.PhotoImage(Image.open(r"Front end\images\hotel2.jpg"))
+    canvas1.create_image(0, 0, anchor=NW, image=bg_image)
+
+    #Adding the text and labels using the create_text and create_window methods
+    canvas1.create_text(150, 40, text="Username :", font=("Segoe UI bold", 14), fill="#FF00F7")
     name = StringVar()
-    nameentry = Entry(win1, textvariable=name, font=("Verdana", 13)).grid(
-        row=0, column=1, padx=5, pady=10)
+    name_entry = Entry(win1, textvariable=name, font=("Verdana", 13), bg="lightblue")
+    canvas1.create_window(400, 40, window=name_entry)
 
-    phnolabel = Label(win1, text="Phone Number :", font=("Segoe UI bold", 14)).grid(
-        row=1, column=0, padx=5, pady=10
-    )
+    canvas1.create_text(150, 90, text="Phone Number :", font=("Segoe UI bold", 14), fill="#FF00F7")
     phno = StringVar()
-    phnoentry = Entry(win1, textvariable=phno, font=("Verdana", 13)).grid(
-        row=1, column=1, padx=5, pady=10)
+    phno_entry = Entry(win1, textvariable=phno, font=("Verdana", 13), bg="lightblue")
+    canvas1.create_window(400, 90, window=phno_entry)
 
-    maillabel = Label(win1, text="Email :", font=("Segoe UI bold", 14)).grid(
-        row=2, column=0, padx=5, pady=10)
+    canvas1.create_text(150, 140, text="Email :", font=("Segoe UI bold", 14), fill="#FF00F7")
     mail_id = StringVar()
-    mailentry = Entry(win1, textvariable=mail_id, font=("Verdana", 13)).grid(
-        row=2, column=1, padx=5, pady=10)
+    mail_entry = Entry(win1, textvariable=mail_id, font=("Verdana", 13), bg="lightblue")
+    canvas1.create_window(400, 140, window=mail_entry)
 
-    passlabel = Label(win1, text="Password :", font=(
-        "Segoe UI bold", 14)).grid(row=3, column=0, padx=5, pady=10)
+    canvas1.create_text(150, 190, text="Password :", font=("Segoe UI bold", 14), fill="#FF00F7")
     pwd = StringVar()
-    pwdentry = Entry(win1, textvariable=pwd, font=("Verdana", 13)).grid(
-        row=3, column=1, padx=5, pady=10)
+    pwd_entry = Entry(win1, textvariable=pwd, font=("Verdana", 13), bg="lightblue")
+    canvas1.create_window(400, 190, window=pwd_entry)
 
-    signup = partial(signup, name, phno, mail_id, pwd)
-    logbutton = Button(win1, text="Signup", command=signup,
-                       font=("Segoe UI bold", 14), fg="white", bg="green")
-    logbutton.grid(row=5, column=1, padx=5, pady=10)
+    signup_func = partial(signup, name, phno, mail_id, pwd)
+    signup_button = Button(win1, text="Signup", command=signup_func, font=("Segoe UI bold", 14), fg="white", bg="green")
+    canvas1.create_window(300, 260, window=signup_button)
 
     win1.mainloop()
 
